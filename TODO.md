@@ -14,8 +14,8 @@
 
 ## Status Saat Ini
 
-- **Fase aktif:** Phase 0 — Menunggu verifikasi deploy dan CI
-- **Fokus berikutnya:** Verifikasi CI run & Vercel deployment → T-010 (Phase 1)
+- **Fase aktif:** Phase 0 — Setup & Registrasi (Selesai & Terverifikasi di Vercel + CI)
+- **Fokus berikutnya:** T-010 → T-019 (Phase 1 — Fondasi & Master Data)
 - **Terakhir diperbarui:** 15 Okt 2026 oleh AI Coding Agent
 - **Tenggat kunci:** Daftar Gel. 3: 16 Okt · TM: 18 Okt · Kerja: 19 Okt–10 Nov · Submit: 10 Nov 23:59 WIB (target ≤ 18:00) · Final: 14 Nov
 
@@ -30,8 +30,8 @@
 - [x] T-003 Init repo GitHub (akun pribadi, bukan organization), scaffold Next.js + TS strict, pnpm, ESLint/Prettier, `.nvmrc`
 - [x] T-004 Tailwind + shadcn/ui, tema (warna hangat), layout dasar, komponen shared awal
 - [x] T-005 Supabase + Prisma + `lib/env.ts` (validasi Zod diperketat) + `.env.example`
-- [/] T-006 Deploy kerangka ke Vercel + `/api/health` + `/api/cron/daily` (keep-alive) + `CRON_SECRET`
-- [/] T-007 CI GitHub Actions (lint, typecheck, test, build) (dalam verifikasi push)
+- [x] T-006 Deploy kerangka ke Vercel + `/api/health` + `/api/cron/daily` (keep-alive) + `CRON_SECRET`
+- [x] T-007 CI GitHub Actions (lint, typecheck, test, build) (hijau di GitHub Actions run)
 
 ### Phase 1 — Fondasi & Master Data (19–21 Okt)
 
@@ -149,6 +149,18 @@
 | D-006 | 15 Okt  | Waktu disimpan UTC, `businessDate` WIB ditulis saat transaksi                         | Hindari bug batas hari                             |
 
 ## 📝 Session Log (tambahkan entri terbaru di atas)
+
+### [2026-10-15 17:25] Verifikasi Live Vercel & CI Selesai oleh AI Coding Agent
+
+- Dikerjakan: T-006, T-007 (Verifikasi deploy Vercel + CI live)
+- Hasil Verifikasi:
+  - GitHub Actions Run: https://github.com/Ameer-28/invensmart/actions/runs/38718338216 (Status: Completed, Conclusion: Success)
+  - Vercel Live Deployment: https://invensmart.vercel.app/ (HTTP 200, landing page Phase 0)
+  - Health Check Endpoint: `GET https://invensmart.vercel.app/api/health` -> HTTP 200 `{"status":"ok","database":"connected"}` (Supabase PostgreSQL asli terhubung)
+  - Cron Keep-Alive Endpoint: `GET https://invensmart.vercel.app/api/cron/daily` tanpa header -> HTTP 401 Unauthorized `{"ok":false,"error":"Unauthorized: Invalid cron secret"}`
+  - Cron Keep-Alive dengan Bearer Token -> HTTP 200 OK `{"ok":true,"message":"Daily cron job executed successfully"}`
+- Semua kriteria Phase 0 resmi terpenuhi (T-003 s.d T-007 [x]).
+- Berikutnya: Masuk Phase 1 — Fondasi & Master Data (T-010 s.d T-019).
 
 ### [2026-10-15 16:05] Sesi Setup Phase 0 oleh AI Coding Agent
 
