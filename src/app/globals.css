@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Warm bakery amber/orange */
+    --primary: 32 95% 44%;
+    --primary-foreground: 60 9.1% 97.8%;
+
+    --secondary: 35 30% 93%;
+    --secondary-foreground: 24 9.8% 10%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 34 100% 94%;
+    --accent-foreground: 24 9.8% 10%;
+
+    /* Semantic status colors */
+    --success: 142 76% 36%;
+    --success-foreground: 355.7 100% 97.3%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 48 96% 89%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 32 95% 44%;
+
+    --radius: 0.625rem;
+  }
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Touch targets for tablet POS ergonomics */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
