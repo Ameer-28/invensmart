@@ -39,16 +39,16 @@ Harapan: tepat {{n}} sukses, {{k}} gagal dengan `InsufficientStockError`, stok a
 
 ### 1.4 Checklist tes berdasarkan area
 
-| Area | Happy path | Edge cases yang wajib diuji |
-|---|---|---|
-| FEFO | Mengambil dari batch expiry terdekat | Expiry null di urutan terakhir; batch kedaluwarsa dilewati; kebutuhan melintasi 3 batch; stok kurang → rollback total |
-| HPP | Σ resep ÷ yield + overhead | Yield > 1; bahan tanpa harga; perubahan harga bahan; pembulatan; resep kosong |
-| POS checkout | Stok terpotong sesuai resep | Habis di server walau UI lolos; double submit; void lalu stok pulih; pembayaran kurang |
-| Konversi satuan | kg→G, l→ML | Satuan kemasan tanpa `packSizeInBase`; satuan tak dikenal; desimal koma/titik |
-| Forecast | Hasil sesuai hitungan manual | <4 titik data; kehabisan (tersensor); kapasitas maks; margin tipis (z negatif); hari libur tanpa data |
-| OCR pipeline | Draf dari nota rapi | Non-nota; JSON invalid; total tak cocok; harga anomali; nama bahan baru; AI mati |
-| Auth/RBAC | Login sukses | Password salah (pesan generik); rate limit; akun nonaktif; CASHIER memanggil aksi OWNER langsung |
-| Zona waktu | Transaksi masuk hari benar | 23:59 vs 00:01 WIB; pergantian bulan/tahun |
+| Area            | Happy path                           | Edge cases yang wajib diuji                                                                                           |
+| --------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| FEFO            | Mengambil dari batch expiry terdekat | Expiry null di urutan terakhir; batch kedaluwarsa dilewati; kebutuhan melintasi 3 batch; stok kurang → rollback total |
+| HPP             | Σ resep ÷ yield + overhead           | Yield > 1; bahan tanpa harga; perubahan harga bahan; pembulatan; resep kosong                                         |
+| POS checkout    | Stok terpotong sesuai resep          | Habis di server walau UI lolos; double submit; void lalu stok pulih; pembayaran kurang                                |
+| Konversi satuan | kg→G, l→ML                           | Satuan kemasan tanpa `packSizeInBase`; satuan tak dikenal; desimal koma/titik                                         |
+| Forecast        | Hasil sesuai hitungan manual         | <4 titik data; kehabisan (tersensor); kapasitas maks; margin tipis (z negatif); hari libur tanpa data                 |
+| OCR pipeline    | Draf dari nota rapi                  | Non-nota; JSON invalid; total tak cocok; harga anomali; nama bahan baru; AI mati                                      |
+| Auth/RBAC       | Login sukses                         | Password salah (pesan generik); rate limit; akun nonaktif; CASHIER memanggil aksi OWNER langsung                      |
+| Zona waktu      | Transaksi masuk hari benar           | 23:59 vs 00:01 WIB; pergantian bulan/tahun                                                                            |
 
 ---
 
@@ -65,23 +65,27 @@ Jangan mengubah kode; hasilkan laporan dan usulkan patch. Akhiri dengan daftar y
 ### 2.2 Checklist (dipetakan ke OWASP Top 10; cek versi terbaru di situs OWASP)
 
 **Akses & autentikasi**
-- [ ] *Broken Access Control:* setiap Server Action/Route Handler memanggil `requireRole()`; cek kepemilikan/peran untuk data per-id (cegah IDOR); menyembunyikan menu bukan otorisasi; `/r/[token]` hanya bergantung pada token acak ≥ 128 bit dan tidak memuat PII/email kasir
-- [ ] *Identification & Authentication Failures:* bcrypt cost ≥ 12; pesan login generik; rate limit login; sesi kedaluwarsa; akun nonaktif ditolak pada setiap request
+
+- [ ] _Broken Access Control:_ setiap Server Action/Route Handler memanggil `requireRole()`; cek kepemilikan/peran untuk data per-id (cegah IDOR); menyembunyikan menu bukan otorisasi; `/r/[token]` hanya bergantung pada token acak ≥ 128 bit dan tidak memuat PII/email kasir
+- [ ] _Identification & Authentication Failures:_ bcrypt cost ≥ 12; pesan login generik; rate limit login; sesi kedaluwarsa; akun nonaktif ditolak pada setiap request
 - [ ] Cookie sesi: httpOnly, Secure, SameSite
 
 **Data & injeksi**
-- [ ] *Injection:* tidak ada `$queryRawUnsafe` / SQL berinterpolasi; semua input lewat Zod; output ke HTML di-escape; tidak ada `dangerouslySetInnerHTML`
-- [ ] *Cryptographic Failures:* tidak ada rahasia di repo/klien (`git log -p` + grep pola kunci); `.env` di `.gitignore`; token dibuat dengan `crypto.randomBytes`
-- [ ] *Security Misconfiguration:* header (CSP, X-Content-Type-Options, Referrer-Policy, frame-ancestors); error tidak membocorkan stack trace; mode debug mati di produksi; cron dilindungi `CRON_SECRET`
-- [ ] *Insecure Design:* mutasi stok transaksional + idempotent; batas bisnis (qty, diskon, rentang laporan) divalidasi di server
+
+- [ ] _Injection:_ tidak ada `$queryRawUnsafe` / SQL berinterpolasi; semua input lewat Zod; output ke HTML di-escape; tidak ada `dangerouslySetInnerHTML`
+- [ ] _Cryptographic Failures:_ tidak ada rahasia di repo/klien (`git log -p` + grep pola kunci); `.env` di `.gitignore`; token dibuat dengan `crypto.randomBytes`
+- [ ] _Security Misconfiguration:_ header (CSP, X-Content-Type-Options, Referrer-Policy, frame-ancestors); error tidak membocorkan stack trace; mode debug mati di produksi; cron dilindungi `CRON_SECRET`
+- [ ] _Insecure Design:_ mutasi stok transaksional + idempotent; batas bisnis (qty, diskon, rentang laporan) divalidasi di server
 
 **Rantai pasok & logging**
-- [ ] *Vulnerable Components:* `pnpm audit`; tidak ada dependency di luar daftar `AGENTS.md`; lockfile ter-commit
-- [ ] *Integrity Failures:* migrasi tidak diubah setelah diterapkan; seed tidak berjalan otomatis di produksi
-- [ ] *Logging & Monitoring Failures:* aksi sensitif masuk AuditLog; log tanpa PII/rahasia; `AiLog` tanpa payload
-- [ ] *SSRF:* tidak ada fetch ke URL dari input user
+
+- [ ] _Vulnerable Components:_ `pnpm audit`; tidak ada dependency di luar daftar `AGENTS.md`; lockfile ter-commit
+- [ ] _Integrity Failures:_ migrasi tidak diubah setelah diterapkan; seed tidak berjalan otomatis di produksi
+- [ ] _Logging & Monitoring Failures:_ aksi sensitif masuk AuditLog; log tanpa PII/rahasia; `AiLog` tanpa payload
+- [ ] _SSRF:_ tidak ada fetch ke URL dari input user
 
 **Unggahan & AI**
+
 - [ ] Validasi MIME + magic bytes + ukuran; gambar tidak disimpan; nama berkas tidak dipakai di path
 - [ ] **Prompt injection:** teks di gambar/data diperlakukan sebagai data, bukan instruksi; output dipaksa skema Zod; LLM tidak punya akses tool/DB
 - [ ] Panggilan AI hanya dari server; ada timeout, rate limit, kill switch; tidak ada PII pelanggan di prompt

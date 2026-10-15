@@ -28,7 +28,10 @@ export function StatusBadge({ status, label, className }: StatusBadgeProps) {
   return (
     <Badge
       variant={variantMap[status]}
-      className={cn("inline-flex items-center gap-1.5 py-1 px-2.5 font-medium", className)}
+      className={cn(
+        "inline-flex items-center gap-1.5 px-2.5 py-1 font-medium",
+        className,
+      )}
     >
       <span className={cn("h-1.5 w-1.5 rounded-full", dotColorMap[status])} />
       {label}

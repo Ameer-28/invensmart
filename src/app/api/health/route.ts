@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/server/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     // Jalankan query nyata ke database untuk memverifikasi koneksi aktif dan keep-alive

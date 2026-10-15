@@ -4,18 +4,18 @@
 
 ## Status Legend
 
-| Tanda | Arti |
-|---|---|
-| `[ ]` | Todo |
+| Tanda | Arti                                               |
+| ----- | -------------------------------------------------- |
+| `[ ]` | Todo                                               |
 | `[/]` | In Progress (maksimal 2 tugas sekaligus per orang) |
-| `[x]` | Done (memenuhi Definition of Done) |
-| `[~]` | Blocked (tulis penyebab di bagian Blocked) |
-| `[-]` | Cancelled (tulis alasan di Decision Log) |
+| `[x]` | Done (memenuhi Definition of Done)                 |
+| `[~]` | Blocked (tulis penyebab di bagian Blocked)         |
+| `[-]` | Cancelled (tulis alasan di Decision Log)           |
 
 ## Status Saat Ini
 
-- **Fase aktif:** Phase 0 — Setup & Registrasi (Selesai) → Siap masuk Phase 1
-- **Fokus berikutnya:** T-010 → T-019 (Phase 1)
+- **Fase aktif:** Phase 0 — Menunggu verifikasi deploy dan CI
+- **Fokus berikutnya:** Verifikasi CI run & Vercel deployment → T-010 (Phase 1)
 - **Terakhir diperbarui:** 15 Okt 2026 oleh AI Coding Agent
 - **Tenggat kunci:** Daftar Gel. 3: 16 Okt · TM: 18 Okt · Kerja: 19 Okt–10 Nov · Submit: 10 Nov 23:59 WIB (target ≤ 18:00) · Final: 14 Nov
 
@@ -24,15 +24,17 @@
 ## 🔥 High Priority — Foundation & Core MVP (P0)
 
 ### Phase 0 — Setup (15–18 Okt)
+
 - [ ] T-001 Konfirmasi pendaftaran GTNIC Gel. 3 **sebelum 16 Okt** (bukan kode)
 - [ ] T-002 Hadiri Technical Meeting 18 Okt; catat ketentuan tambahan (template surat pernyataan, format form) → perbarui `PRD.md` Lampiran B
 - [x] T-003 Init repo GitHub (akun pribadi, bukan organization), scaffold Next.js + TS strict, pnpm, ESLint/Prettier, `.nvmrc`
 - [x] T-004 Tailwind + shadcn/ui, tema (warna hangat), layout dasar, komponen shared awal
-- [x] T-005 Supabase + Prisma + `lib/env.ts` (validasi Zod) + `.env.example`
-- [x] T-006 Deploy kerangka ke Vercel + `/api/health` + `/api/cron/daily` (keep-alive) + `CRON_SECRET`
-- [x] T-007 CI GitHub Actions (lint, typecheck, test, build)
+- [x] T-005 Supabase + Prisma + `lib/env.ts` (validasi Zod diperketat) + `.env.example`
+- [/] T-006 Deploy kerangka ke Vercel + `/api/health` + `/api/cron/daily` (keep-alive) + `CRON_SECRET`
+- [/] T-007 CI GitHub Actions (lint, typecheck, test, build) (dalam verifikasi push)
 
 ### Phase 1 — Fondasi & Master Data (19–21 Okt)
+
 - [ ] T-010 Schema Prisma inti: User, StoreSettings, Ingredient, IngredientAlias, Supplier, Product, RecipeItem + migrasi
 - [ ] T-011 Auth.js Credentials + bcrypt + sesi JWT + proteksi rute (FR-001)
 - [ ] T-012 `requireRole()` / RBAC + tes (FR-002)
@@ -45,6 +47,7 @@
 - [ ] T-019 Tampilan HPP + margin + badge di daftar menu
 
 ### Phase 2 — Inventori (22–24 Okt)
+
 - [ ] T-020 Schema: StockBatch, StockMovement, Purchase, PurchaseItem + migrasi CHECK `qtyRemaining >= 0`
 - [ ] T-021 Domain `fefo.ts` + tes (termasuk batch kedaluwarsa & expiry null)
 - [ ] T-022 Form pembelian manual → batch + update biaya + hitung ulang HPP (FR-020)
@@ -52,6 +55,7 @@
 - [ ] T-024 Perhitungan alert stok rendah/kedaluwarsa + badge dashboard (FR-023)
 
 ### Phase 3 — POS (25–28 Okt)
+
 - [ ] T-030 Schema Sale, SaleItem + generator invoice aman konkurensi
 - [ ] T-031 UI POS: grid, pencarian, keranjang (`useReducer`), tablet-first (FR-030)
 - [ ] T-032 Perhitungan ketersediaan ("Habis") di server + UI (FR-031)
@@ -62,12 +66,14 @@
 - [ ] T-037 Seed v1: master data, resep, riwayat pembelian & penjualan 6 bulan, akun demo (FR-062)
 
 ### Phase 4 — Produksi & Dashboard (29 Okt–1 Nov)
+
 - [ ] T-040 Schema ProductionRun, FinishedGoodsMovement + form produksi (FR-040)
 - [ ] T-041 Tutup toko terpandu + DailyClosing/Item + penguncian (FR-041)
 - [ ] T-042 Dashboard owner: KPI, grafik 7/30 hari, skeleton/empty state (FR-060)
 - [ ] T-043 Seed v2: produksi, sisa, limbah, lonjakan harga, kejadian kehabisan
 
 ### Phase 5 — AI P0 (2–5 Nov)
+
 - [ ] T-050 Adapter `AiProvider` + implementasi Gemini (`@google/genai`), timeout, `AiLog`, `AI_ENABLED` (FR-057)
 - [ ] T-051 Endpoint baca nota + validasi file + `receiptSchema` + sanity check + kompres di klien (FR-050)
 - [ ] T-052 Matcher bahan (alias → fuzzy) + layar review + konfirmasi + alias learning (FR-051)
@@ -76,6 +82,7 @@
 - [ ] T-055 Uji jalur fallback AI (mati, 429, JSON invalid, bukan nota)
 
 ### Phase 7 — Pengumpulan (9–10 Nov)
+
 - [ ] T-060 README (setup, akun demo, env, arsitektur, cara menjalankan tes)
 - [ ] T-061 Proposal PDF (≤ 15 hlm, TNR 12, spasi 1,5, margin kiri 4/lainnya 3 cm, logo GTNIC cover, diagram DB & arsitektur, screenshot, batasan, future development)
 - [ ] T-062 Video demo 3–5 menit (perkenalan tim, masalah, solusi, demo alur utama + AI), unggah publik
@@ -127,36 +134,37 @@
 ## ⛔ Blocked
 
 | Tugas | Penyebab | Dibutuhkan untuk lanjut | Tanggal |
-|---|---|---|---|
-| — | — | — | — |
+| ----- | -------- | ----------------------- | ------- |
+| —     | —        | —                       | —       |
 
 ## 🧭 Decision Log
 
-| ID | Tanggal | Keputusan | Alasan |
-|---|---|---|---|
-| D-001 | 15 Okt | Niche: UMKM kuliner offline (bakery/kedai), single-tenant | Masalah nyata, mudah didemokan, skop 3 minggu |
-| D-002 | 15 Okt | Stack: Next.js + PostgreSQL (Supabase) + Prisma + Auth.js + Gemini | Satu codebase, satu deploy; sesuai ketentuan lomba |
-| D-003 | 15 Okt | Angka (stok, HPP, forecast, diskon) dihitung kode; LLM hanya baca nota & menulis teks | Mencegah halusinasi angka; bisa dijelaskan ke juri |
-| D-004 | 15 Okt | Gambar nota tidak disimpan; konfirmasi manusia wajib | Privasi + keamanan |
-| D-005 | 15 Okt | Tanpa mode offline penuh, tanpa payment gateway, tanpa WhatsApp API | Skop dan risiko; masuk Future Development |
-| D-006 | 15 Okt | Waktu disimpan UTC, `businessDate` WIB ditulis saat transaksi | Hindari bug batas hari |
+| ID    | Tanggal | Keputusan                                                                             | Alasan                                             |
+| ----- | ------- | ------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| D-001 | 15 Okt  | Niche: UMKM kuliner offline (bakery/kedai), single-tenant                             | Masalah nyata, mudah didemokan, skop 3 minggu      |
+| D-002 | 15 Okt  | Stack: Next.js + PostgreSQL (Supabase) + Prisma + Auth.js + Gemini                    | Satu codebase, satu deploy; sesuai ketentuan lomba |
+| D-003 | 15 Okt  | Angka (stok, HPP, forecast, diskon) dihitung kode; LLM hanya baca nota & menulis teks | Mencegah halusinasi angka; bisa dijelaskan ke juri |
+| D-004 | 15 Okt  | Gambar nota tidak disimpan; konfirmasi manusia wajib                                  | Privasi + keamanan                                 |
+| D-005 | 15 Okt  | Tanpa mode offline penuh, tanpa payment gateway, tanpa WhatsApp API                   | Skop dan risiko; masuk Future Development          |
+| D-006 | 15 Okt  | Waktu disimpan UTC, `businessDate` WIB ditulis saat transaksi                         | Hindari bug batas hari                             |
 
 ## 📝 Session Log (tambahkan entri terbaru di atas)
 
 ### [2026-10-15 16:05] Sesi Setup Phase 0 oleh AI Coding Agent
+
 - Dikerjakan: T-003, T-004, T-005, T-006, T-007 (Phase 0 selesai)
 - Perubahan utama:
-  * Inisialisasi repo git, scaffold Next.js App Router, TypeScript strict, pnpm, Tailwind CSS v4, Prettier, .nvmrc (Node 22)
-  * Setup token tema hangat (amber/orange bakery + slate), touch target tablet 44px+
-  * Pembuatan komponen UI dasar (Button, Card, Badge, Input) dan komponen shared (Money Rp 12.500, StatusBadge, EmptyState)
-  * Setup Prisma client singleton, schema datasource Postgres, validasi env Zod (`src/lib/env.ts`), dan template `.env.example`
-  * Endpoint `/api/health` dengan keep-alive DB nyata dan `/api/cron/daily` dengan proteksi Bearer `CRON_SECRET` & konfigurasi `vercel.json`
-  * CI GitHub Actions (`.github/workflows/ci.yml`) untuk lint, typecheck, test, dan build
+  - Inisialisasi repo git, scaffold Next.js App Router, TypeScript strict, pnpm, Tailwind CSS v4, Prettier, .nvmrc (Node 22)
+  - Setup token tema hangat (amber/orange bakery + slate), touch target tablet 44px+
+  - Pembuatan komponen UI dasar (Button, Card, Badge, Input) dan komponen shared (Money Rp 12.500, StatusBadge, EmptyState)
+  - Setup Prisma client singleton, schema datasource Postgres, validasi env Zod (`src/lib/env.ts`), dan template `.env.example`
+  - Endpoint `/api/health` dengan keep-alive DB nyata dan `/api/cron/daily` dengan proteksi Bearer `CRON_SECRET` & konfigurasi `vercel.json`
+  - CI GitHub Actions (`.github/workflows/ci.yml`) untuk lint, typecheck, test, dan build
 - Tes: lint ✔ typecheck ✔ test ✔ (13 unit tests passed) · build ✔
 - Berikutnya: Phase 1 — Fondasi & Master Data (T-010 schema Prisma User, StoreSettings, Ingredient, Product, RecipeItem)
 
 ## 🐞 Known Issues
 
-| ID | Deskripsi | Dampak | Tugas terkait |
-|---|---|---|---|
-| — | — | — | — |
+| ID  | Deskripsi | Dampak | Tugas terkait |
+| --- | --------- | ------ | ------------- |
+| —   | —         | —      | —             |

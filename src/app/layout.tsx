@@ -4,7 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "InvenSmart - Solusi Anti-Mubazir UMKM Kuliner",
-  description: "POS, inventori bahan baku, HPP akurat, dan rekomendasi produksi cerdas untuk UMKM kuliner.",
+  description:
+    "POS, inventori bahan baku, HPP akurat, dan rekomendasi produksi cerdas untuk UMKM kuliner.",
 };
 
 export default function RootLayout({

@@ -7,11 +7,16 @@ export interface MoneyProps extends React.HTMLAttributes<HTMLSpanElement> {
   highlight?: boolean;
 }
 
-export function Money({ amount, highlight = false, className, ...props }: MoneyProps) {
+export function Money({
+  amount,
+  highlight = false,
+  className,
+  ...props
+}: MoneyProps) {
   return (
     <span
       className={cn(
-        "font-medium tabular-nums text-slate-900",
+        "font-medium text-slate-900 tabular-nums",
         highlight && "font-bold text-amber-700",
         className,
       )}

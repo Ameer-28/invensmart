@@ -1,15 +1,32 @@
+import crypto from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/server/db";
 import { env } from "@/lib/env";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60; // Dukungan maksimum Hobby/Pro untuk pekerjaan harian
 
-export async function GET(request: NextRequest) {
-  // 1. Verifikasi header Authorization Bearer token CRON_SECRET
-  const authHeader = request.headers.get("authorization");
-  const expectedAuth = `Bearer ${env.CRON_SECRET}`;
+function verifyCronAuth(authHeader: string | null, secret: string): boolean {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return false;
+  }
 
-  if (!authHeader || authHeader !== expectedAuth) {
+  const token = authHeader.slice(7);
+  const tokenBuffer = Buffer.from(token);
+  const secretBuffer = Buffer.from(secret);
+
+  if (tokenBuffer.length !== secretBuffer.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(tokenBuffer, secretBuffer);
+}
+
+export async function GET(request: NextRequest) {
+  // 1. Verifikasi header Authorization Bearer token CRON_SECRET secara timing-safe
+  const authHeader = request.headers.get("authorization");
+
+  if (!verifyCronAuth(authHeader, env.CRON_SECRET)) {
     return NextResponse.json(
       { ok: false, error: "Unauthorized: Invalid cron secret" },
       { status: 401 },

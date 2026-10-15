@@ -58,6 +58,7 @@ Sebuah tugas **hanya** boleh ditandai `[x]` bila semua terpenuhi:
 **Selama bekerja:** tandai tugas `[/]`; bila terblokir, ubah ke `[~]` dan isi tabel Blocked dengan penyebab dan hal yang dibutuhkan.
 
 **Setiap selesai satu tugas (wajib):**
+
 1. Jalankan `pnpm lint && pnpm typecheck && pnpm test` (dan `pnpm build` bila menyentuh konfigurasi/rute).
 2. Perbarui `TODO.md`: status → `[x]`, tambahkan entri Session Log, catat keputusan baru di Decision Log.
 3. Commit dengan Conventional Commits yang merujuk ID tugas, di cabang `feat/T-0xx-deskripsi` (atau `fix/…`, `chore/…`), dan buka PR kecil.

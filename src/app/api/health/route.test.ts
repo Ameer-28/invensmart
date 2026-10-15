@@ -19,7 +19,9 @@ describe("/api/health", () => {
   });
 
   it("returns 503 and degraded status when database fails", async () => {
-    vi.spyOn(prisma, "$queryRaw").mockRejectedValueOnce(new Error("DB Connection Error"));
+    vi.spyOn(prisma, "$queryRaw").mockRejectedValueOnce(
+      new Error("DB Connection Error"),
+    );
 
     const res = await GET();
     expect(res.status).toBe(503);
